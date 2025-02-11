@@ -8,3 +8,11 @@ build:
 .PHONY: run
 run: build
 	./${exe_path}
+
+.PHONY: up
+up:
+	docker-compose up --build
+
+.PHONY: down
+down:
+	docker-compose down --rmi all

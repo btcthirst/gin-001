@@ -1,29 +1,27 @@
 package api
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
-	"github.com/btcthirst/gin-001/internal/config"
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 )
 
 func Init() {
-	if err := config.Init(); err != nil {
-		log.Fatal(err)
-	}
 	if err := startServer(); err != nil {
 		log.Fatal(err)
 	}
 }
 
 func startServer() error {
-	port := viper.Get("PORT")
+	port := os.Getenv("PORT")
+	port = "1234"
 	if port == "" {
-		port = "8080"
+		return errors.New("env PORT is empty")
 	}
 	addr := fmt.Sprintf(":%s", port)
 	r := gin.New()
